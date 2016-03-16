@@ -1,0 +1,36 @@
+<% content_for :contentInstall do %>
+  <div class="ititle"><%= @title %></div>
+  <% if @bewareMessage %>
+    <div class="ibewareMessage"><%= @bewareMessage %></div>
+  <% else %>
+    <div class="iMainFrame">
+      <div id="iTab">
+      <% @titleCo.each_key do |nameCo| %>
+        <% if nameCo == @titleCo.keys[0] %>
+          <button id='i<%= nameCo%>' class="switchBt tabActiv"><%= nameCo %></button>
+        <% else %>
+          <button id='i<%= nameCo%>' class="switchBt"><%= nameCo %></button>
+        <% end %>
+      <% end %>
+      </div>
+      <form method="GET" action="/save">
+      <% @titleCo.each do |nameCo, fieldsCo| %>
+        <% if nameCo == @titleCo.keys[0] %>
+          <div id="i<%= nameCo %>Frame" class="tab tabShow"><%= nameCo %> configuration
+        <% else %>
+          <div id="i<%= nameCo %>Frame" class="tab tabHidden"><%= nameCo %> configuration
+        <% end %>
+        <div class='iForm'>
+        <% if fieldsCo.size > 0 %>
+          <% fieldsCo.each do |label, field| %>
+            <label class="iLabel"><%= label %>: <input name="<%= nameCo+"_"+label %>" value="<%= field %>" /></label>
+          <% end %>
+        <% end %>
+        </div>
+        </div>
+      <% end %>
+      <input class="buttonConfig" type="submit" value="save" />
+    </form>
+  <% end %>
+  </div>
+<% end %>

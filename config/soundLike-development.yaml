@@ -1,0 +1,9 @@
+---
+Sqlite3:
+  path: db/development.db
+Ldap:
+  host: localhost
+  port: '389'
+  treebase: dc=domain, dc=name
+  adminUser: cn=admin,dc=domain,dc=name
+  passwordUser: pdasswordb
