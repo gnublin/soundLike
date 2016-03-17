@@ -9,7 +9,8 @@ class InstallController < ApplicationController
     unless File.writable?(@configFile)
       @bewareMessage = "#{@configfile} is not writable. Please fix permissions before to continue"
     end
-    @titleCo = @yamlConnect['connection']
+
+    @titleCo = @yamlConnect.clone
     @titleCo['Sqlite3']['login'] = 'admin'
     @titleCo['Sqlite3']['password'] = md5 'admin'
     @subTitle = params['dbType']
@@ -24,10 +25,10 @@ class InstallController < ApplicationController
     if db.tableExist?('users').length == 0
       db.createUsersDB('users')
     end
-    unless db.userExist
-      db.createUser()
+    unless db.userExist?('admin')
+      db.createUser(data['user'],1)
+    end
     @result = db.userExist?('admin')
-    
   end
 
 end

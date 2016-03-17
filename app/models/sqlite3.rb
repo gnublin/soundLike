@@ -11,8 +11,16 @@ class Sqlite3
     @db.table_info(tableName)
   end
 
-  def createUser(userName, data)
-    @db.execute ('insert into ')
+  def createUser(data, admin)
+    fieldsName = Array.new()
+    valuesData = Array.new()
+    data.each do |fields, values|
+     fieldsName << "#{fields}"
+     valuesData << "\"#{values}\""
+    end
+    fieldsName << "admin"
+    valuesData << admin
+    p @db.execute ("insert into users (#{fieldsName.join(',')}) values (#{valuesData.join(',')})")
   end
 
   def userExist?(userName)
