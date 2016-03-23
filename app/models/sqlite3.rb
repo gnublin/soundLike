@@ -8,7 +8,12 @@ class Sqlite3
   end
 
   def tableExist?(tableName)
-    @db.table_info(tableName)
+    isExist = @db.table_info(tableName)
+    if isExist.empty?
+      false
+    else
+      true
+    end
   end
 
   def createUser(data, admin)
@@ -20,15 +25,28 @@ class Sqlite3
     end
     fieldsName << "admin"
     valuesData << admin
-    p @db.execute ("insert into users (#{fieldsName.join(',')}) values (#{valuesData.join(',')})")
+    @db.execute ("insert into users (#{fieldsName.join(',')}) values (#{valuesData.join(',')})")
+  end
+
+  def testCredentials(userDatas)
+    username = userDatas['username']
+    password = userDatas['password']
+    dbPassword = @db.execute ("select password from users where login=\'#{username}\'")
+    unless dbPassword.join('').match(password).nil?
+       result = true
+    else
+       result = false
+    end
   end
 
   def userExist?(userName)
-    userExist = @db.execute ("select login from users where login=\"#{userName}\"")
-    !userExist.empty?
+    userExist = @db.execute ("select login from users where login=\'#{userName}\'")
+     if userExist.empty?
+      false
+    else
+      true
+    end
   end
-
-
 
   def query(dbName, tableName, type, query )
     case 'type'

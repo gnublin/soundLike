@@ -5,15 +5,24 @@ class InstallController < ApplicationController
   end
 
   def install
-    @title = "Your Application is not configured yet. You can do it now!"
-    unless File.writable?(@configFile)
-      @bewareMessage = "#{@configfile} is not writable. Please fix permissions before to continue"
+    if session[:msgErr] == 0
+      @msgErr = "OK: success"
+    elsif session[:msgErr]
+      @msgErr = "NOK: "
     end
-
-    @titleCo = @yamlConnect.clone
-    @titleCo['Sqlite3']['login'] = 'admin'
-    @titleCo['Sqlite3']['password'] = md5 'admin'
-    @subTitle = params['dbType']
+    session.delete(:msgErr)
+    if @yamlConnect['Sqlite3'] and @yamlConnect['Sqlite3']['path'] and File.exist?(@yamlConnect['Sqlite3']['path']) and Sqlite3.new(@yamlConnect['Sqlite3']['path']).tableExist?('users') and Sqlite3.new(@yamlConnect['Sqlite3']['path']).userExist?('admin')
+        @alreadInstalled = true
+        @title = "Your application is already configured. If you want to re-install, you should contact your administrator or remove the Sqlite3 database.
+        You will be redirect to login page in 3 secondes..."
+    else
+      @alreadyInstalled = false
+      @titleCo = @yamlConnect.clone
+      @titleCo['Sqlite3']['login'] = 'admin'
+      @titleCo['Sqlite3']['password'] = md5 'admin'
+      @alreadInstalled = false
+      @title = "Your Application is not configured yet. You can do it now!"
+    end
     render layout: 'install'
   end
 
@@ -22,13 +31,30 @@ class InstallController < ApplicationController
     yamlR = writeYaml(@configFile, data['yaml'])
     yamlUpdated = YAML::load_file(@configFile)
     db = Sqlite3.new(yamlUpdated['Sqlite3']['path'])
-    if db.tableExist?('users').length == 0
+    unless db.tableExist?('users')
       db.createUsersDB('users')
     end
     unless db.userExist?('admin')
       db.createUser(data['user'],1)
     end
-    @result = db.userExist?('admin')
+    result = db.userExist?('admin')
+    p result
+    if result == true
+      session[:msgErr] = 0
+    else
+      session[:msgErr] = 1
+    end
+    ref = request.referer
+    uri = URI(request.referer).path
+		if URI(request.referer).query
+    	uparams = URI::decode_www_form(URI(request.referer).query).to_h
+    	uparams.delete("msgErr")
+			uparams = "?#{uparams.to_query}"
+		else
+			uparams=''
+		end
+    url = "#{uri}#{uparams}"
+    redirect_to "#{url}"
   end
 
 end

@@ -78,3 +78,22 @@ button {
 .buttonConfig {
   margin-left: 10px;
 }
+
+#msgErr {
+  color: white;
+  font-size: 15pt;
+  padding: 15px;
+  padding-left: 50px;
+  width:100%;
+  transition: opacity 1s; 
+  z-index: 22; 
+}
+
+#msgErr.fade {
+  opacity: 0;
+}
+
+#msgContent {
+  display: inline-block;
+}
+

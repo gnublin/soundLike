@@ -1,8 +1,6 @@
 <% content_for :contentInstall do %>
-  <div class="ititle"><%= @title %></div>
-  <% if @bewareMessage %>
-    <div class="ibewareMessage"><%= @bewareMessage %></div>
-  <% else %>
+  <div id="titleMessage" class="ititle"><%= @title %></div>
+  <% if @alreadyInstalled == false %>
     <div class="iMainFrame">
       <div id="iTab">
       <% @titleCo.each_key do |nameCo| %>
@@ -31,6 +29,10 @@
       <% end %>
       <input class="buttonConfig" type="submit" value="save" />
     </form>
+    <% else %>
+    <div id="redirect"></div>
+    <script src="redirect.js" type="text/javascript">redirect("/");</script>
+    <script >redirect("titleMessage","/login");</script>
   <% end %>
   </div>
 <% end %>

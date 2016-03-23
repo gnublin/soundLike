@@ -9,7 +9,7 @@
     <div id="main-login">
       <div id="login">
         <img id="logo-login" src='/logo2.png'/>
-          <%= form_for(:session, url: '/create') do |f| %>
+          <%= form_for(:session, url: '/new') do |f| %>
             <%= f.label :username %>
             <%= f.text_field :username, class: 'form-control' %>
             <%= f.label :password %>

@@ -3,6 +3,7 @@
 var buttons = document.querySelectorAll('.switchBt');
 var buttonsLength = buttons.length;
 switchButtons();
+disableErrMsg();
 
 function switchButtons() {
 

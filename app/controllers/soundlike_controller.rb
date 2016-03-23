@@ -4,4 +4,9 @@ class SoundlikeController < ApplicationController
       redirect_to "/notFound.html"
   end
 
+  def music
+    @t = session
+    render layout: 'soundlike'
+  end
+
 end
