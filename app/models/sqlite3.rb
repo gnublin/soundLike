@@ -1,5 +1,11 @@
 class Sqlite3
   def initialize(file)
+    if file == 'default'
+      configFile = "#{Rails.root}/config/soundLike-#{Rails.env}.yaml"
+      yamlConnect = YAML::load_file(configFile)
+      file = yamlConnect['Sqlite3']['path']
+    end
+
     @db = SQLite3::Database.new(file)
   end
 
@@ -36,6 +42,15 @@ class Sqlite3
        result = true
     else
        result = false
+    end
+  end
+
+  def isAdmin(username)
+    isAdmin = @db.execute ("select admin from users where login=\'#{username}\'")
+    if isAdmin.join.to_i == 1
+      "admin"
+    else
+      "other"
     end
   end
 

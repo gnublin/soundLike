@@ -1,0 +1,7 @@
+---
+menu:
+  admin: ['music', 'users']
+  other: ['music']
+menuLeft:
+  music: ['directories']
+  users: ['add', 'manage']

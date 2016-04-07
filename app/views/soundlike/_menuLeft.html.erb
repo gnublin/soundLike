@@ -1,0 +1,9 @@
+<% @menu.each do |menuLeft| %>
+  <div id="left-<%= menuLeft.capitalize %>" class="menuLeft">
+    <ul id="list-<%= menuLeft.capitalize %>" class="leftList">
+    <% @menuLeft[menuLeft].each do |leftEntry| %>
+      <li class="leftEntry" id="<%= menuLeft %>_<%= leftEntry %>" ><%= leftEntry.capitalize %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

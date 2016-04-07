@@ -1,0 +1,12 @@
+  <ul id="menu">
+  <% @menu.each_with_index do |menuName, index| %>
+    <% if index == 0 %>
+      <% className = 'menuTab tabActiv' %>
+    <% else %>
+      <% className = 'menuTab' %>
+    <% end %>
+    <% menuNameC = menuName.capitalize %>
+    <li id="menu-<%= menuNameC %>" class="<%= className %>"><%=  menuNameC %></li>
+  <% end %>
+  </ul>
+  <script src="/soundlike/menuLeft.js"  type="text/javascript"></script>

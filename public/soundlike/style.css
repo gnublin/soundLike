@@ -1,0 +1,104 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+dd, dl, dt,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+/*    font-family: Arial, sans-serif; */
+  font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace;
+  font-size: 10pt;
+  margin:0;
+}
+
+.javascriptMessage {
+  background: #5896B2 none repeat scroll 0 0;
+  box-shadow: -1px 2px 5px 1px #5896B2;
+  color: white;
+  font-size: 38pt;
+  padding-left: 10%;
+  position: fixed;
+  width: 100%;
+  z-index: 11;
+}
+
+#banner {
+  border-bottom: 4px solid #5896B2;
+  position: fixed;
+  width: 110%;
+  z-index: 10;
+}
+
+#logo {
+  display: inline-block;
+  float: left;
+  padding-left: 20px;
+}
+
+#menu  {
+  list-style:none;
+  padding-top:55px;
+  padding-left:55px;
+}
+
+.menuTab {
+  border:3px solid white;
+  border-bottom:3px solid grey;
+  border-radius: 20px;
+  cursor:pointer;
+  display: inline-block;
+  padding:10px;
+  margin-left:20px;
+}
+
+.tabActiv, .menuTab:hover {
+  border-radius: 20px;
+  cursor:pointer;
+  display: inline-block;
+  padding:10px;
+  margin-left:20px;
+  border:3px solid #5896B2;
+}
+
+.menuLeft{
+  display: none;
+  height: 90%;
+  margin-top:40px;
+  padding:10px;
+  position: fixed;
+  z-index: 9;
+}
+
+.leftActiv {
+  display:inline-block;
+  padding-top: 100px;
+}
+
+.leftList  {
+  cursor: pointer;
+  list-style: none;
+  padding-top: 55px;
+  padding-left: 10px;
+}
+
