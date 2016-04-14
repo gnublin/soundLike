@@ -63,6 +63,30 @@ class Sqlite3
     end
   end
 
+  def userList()
+    dbUsersList = @db.execute ("select login from users")
+    dbUsersList = dbUsersList.flatten
+    tableStructure = @db.execute ('PRAGMA table_info(users);')
+    tableStructureName = Array.new()
+    tableStructure.each do |el|
+     tableStructureName << el[1]
+    end
+    dbUsersListAll = Hash.new()
+    dbUsersList.each do |userName|
+      dbUsersListAll[userName] = Hash.new() if dbUsersListAll.dig(userName).nil?
+      tableStructureName.each do |field|
+        next if field == 'login'
+        dbUsersListAll[userName][field] = userInfo(field, userName)
+      end
+    end
+    return dbUsersListAll
+  end
+
+  def userInfo(field, userName)
+    dbUserInfos = @db.execute ("select #{field} from users where login=\'#{userName}\'")
+    dbUserInfos.flatten[0]
+  end
+
   def query(dbName, tableName, type, query )
     case 'type'
       when 'insert'

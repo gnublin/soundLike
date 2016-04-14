@@ -14,7 +14,6 @@ function buttonLeftEntry(idName){
 function subMenuActiv(listEl, idActiv) {
 
   for (var g = 0, h = listEl.length; g < h ; g++) {
-    console.log(listEl[g].id)
     if (listEl[g].id == idActiv) {
       listEl[g].className = "leftEntry leftEntryActiv"
     }
@@ -27,11 +26,34 @@ function subMenuActiv(listEl, idActiv) {
 
 function subMenu(subEl){
 
-  console.log(subEl.id);
-  var toto = document.createElement("div")
-  toto.html("<%= j render(:partial => 'test') %>");
+  var oReq = new XMLHttpRequest();
+//  oReq.onload = mainContent;
+  oReq.open("get", "api?type="+subEl.id, true);
+  oReq.send();
 
-  //document.getElementById('mainFrame').appendChild(toto);
-  document.getElementById('mainFrame').appendChild(toto);
+}
+
+
+function mainContent () {
+
+  var jsonContent = JSON.parse(this.response);
+  var jsonType = jsonContent['type'];
+  var jsonData = jsonContent['data'];
+  var jsonDataLength = Object.keys(jsonData).length;
+
+  switch (jsonType) {
+   case "users_manage":
+    tplUsersManage(jsonDataLength, jsonData)
+   break;
+  }
+
+}
+
+function tplUsersManage (length, data){
+  var mainFrame = document.getElementById('mainFrame');
+
+mainFrame.textContent = "#{escape_javascript render(<%= render :layout => 'test', :partial => 'rr' %>)}";
+  console.log(length)
+  console.log(data)
 }
 
