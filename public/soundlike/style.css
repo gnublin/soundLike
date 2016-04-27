@@ -1,4 +1,4 @@
-html, body, div, span, applet, object, iframe,
+/*html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -45,21 +45,13 @@ body {
 
 #banner {
   border-bottom: 4px solid #5896B2;
-  position: fixed;
-  width: 110%;
+/* position: fixed; */
   z-index: 10;
-}
-
-#logo {
-  display: inline-block;
-  float: left;
-  padding-left: 20px;
 }
 
 #menu  {
   list-style:none;
   padding-top:55px;
-  padding-left:55px;
 }
 
 .menuTab {
@@ -77,28 +69,62 @@ body {
   cursor:pointer;
   display: inline-block;
   padding:10px;
-  margin-left:20px;
   border:3px solid #5896B2;
 }
 
-.menuLeft{
+.menuLeft {
   display: none;
-  height: 90%;
-  margin-top:40px;
-  padding:10px;
-  position: fixed;
   z-index: 9;
+}
+
+#menuLeft {
+  display: inline-block;
 }
 
 .leftActiv {
   display:inline-block;
-  padding-top: 100px;
 }
 
 .leftList  {
   cursor: pointer;
   list-style: none;
-  padding-top: 55px;
-  padding-left: 10px;
 }
 
+.leftEntry {
+  padding: 20px;
+  border-bottom:4px solid grey;
+}
+
+.leftEntry:hover {
+  border-bottom:4px solid #5896B2;
+}
+
+.leftEntryActiv {
+  border-bottom:4px solid #5896B2;
+}
+
+#mainFrame {
+  display: inline-block;
+  margin-left: 50px;
+}
+
+#content {
+  display: inline-block;
+  width: 100%;
+}
+
+#bannerUser {
+  display: inline-block;
+  float: right;
+}
+
+#bannerLogo {
+  display: inline-block;
+  float: left;
+  padding-left: 20px;
+
+}
+
+#bannerMenu {
+  display: inline-block;
+}

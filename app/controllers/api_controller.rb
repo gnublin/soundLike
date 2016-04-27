@@ -1,5 +1,7 @@
 class ApiController < ApplicationController
 
+  protect_from_forgery except: :display
+
   def display
     @apiContent = {"result" => "content"}.to_json
 
@@ -8,20 +10,19 @@ class ApiController < ApplicationController
         dbList = Sqlite3.new('default')
         content = dbList.userList;
       when 'users_add'
-        content = ''
+        content = 'dd'
       when 'users_manage'
+        desc = "Welcome to the user managment interface"
         dbList = Sqlite3.new('default')
         content = dbList.userList;
     end
 
-    @apiContent = { 'data' => content, 'type' => params[:type]}
+    @apiContent = { 'data' => content, 'type' => params[:type], 'desc' => desc}
 
-#    render json: @apiContent
-#    render :partial => 'soundlike/test', :object => @apiContent
-    render :render => 'soundlike/test', :layout => false
-  end
-
-  def updateContent
+    @apiContent.to_json
+    respond_to do |format|
+      format.js
+   end
 
   end
 

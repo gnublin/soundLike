@@ -1,0 +1,4 @@
+<% if @apiContent['type'] %>
+document.getElementById('mainFrame').innerHTML="<%= escape_javascript (render :partial => @apiContent['type'], :remote => true)%>";
+
+<% end %>

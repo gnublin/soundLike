@@ -26,34 +26,9 @@ function subMenuActiv(listEl, idActiv) {
 
 function subMenu(subEl){
 
-  var oReq = new XMLHttpRequest();
-//  oReq.onload = mainContent;
-  oReq.open("get", "api?type="+subEl.id, true);
-  oReq.send();
+var reqId = subEl.id
+get = document.createElement('script');
+get.src = "api.js?type="+reqId;
+document.body.appendChild(get);
 
 }
-
-
-function mainContent () {
-
-  var jsonContent = JSON.parse(this.response);
-  var jsonType = jsonContent['type'];
-  var jsonData = jsonContent['data'];
-  var jsonDataLength = Object.keys(jsonData).length;
-
-  switch (jsonType) {
-   case "users_manage":
-    tplUsersManage(jsonDataLength, jsonData)
-   break;
-  }
-
-}
-
-function tplUsersManage (length, data){
-  var mainFrame = document.getElementById('mainFrame');
-
-mainFrame.textContent = "#{escape_javascript render(<%= render :layout => 'test', :partial => 'rr' %>)}";
-  console.log(length)
-  console.log(data)
-}
-

@@ -18,6 +18,8 @@ class SoundlikeController < ApplicationController
     end
 
    render layout: 'soundlike'
+
   end
+
 
 end
