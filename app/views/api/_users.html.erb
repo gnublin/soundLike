@@ -1,0 +1,31 @@
+<div class="titleEl"><%= @apiContent['desc'] %></div>
+<% if @apiContent['data'].is_a? Hash %>
+    <% @apiContent['data'].each do |k, v| %>
+      <br /><br /><%= k %><br /><hr>
+      <%= form_tag("/api/user_modify", method: "get") do %>
+      <% v.each do |field,content| %>
+        <%= hidden_field_tag(:name, k) %>
+        <% if field == "password" %>
+          <%= label_tag(:"#{field}", "#{field}") %>:
+          <%= password_field_tag(:"#{field}", content) %>
+          <div id="genPwdArea-<%= k %>" class="generate"><button id="genPwdButton-<%= k %>" >Generate</button><div id="genPwdClear-<%= k %>"></div></div>
+        <% elsif field == "admin" %>
+          <%= label_tag(:"#{field}", "#{field}") %>:
+          <% if content == 1 %>
+           <%= check_box_tag(:"#{field}", "is_admin", :checked) %>
+          <% else %>
+           <%= check_box_tag(:"#{field}", "is_admin") %>
+          <% end %>
+        <% else %>
+          <%= label_tag(:"#{field}", "#{field}") %>:
+          <%= text_field_tag(:"#{field}") %>
+        <%end %>
+      <% end %>
+      <%= submit_tag("Submit") %>
+      <% if k != "admin" %>
+        <button class="submit" id="user_remote_<%= k %>">Delete</button>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+

@@ -77,10 +77,6 @@ body {
   z-index: 9;
 }
 
-#menuLeft {
-  display: inline-block;
-}
-
 .leftActiv {
   display:inline-block;
 }
@@ -103,13 +99,24 @@ body {
   border-bottom:4px solid #5896B2;
 }
 
+#menuLeft{
+  padding:10px;
+  margin-top:20px;
+  position: fixed;
+  height: 90%;
+  z-index: 9;
+  display:inline-block;
+}
 #mainFrame {
-  display: inline-block;
-  margin-left: 50px;
+  width:80%;
+  margin-left: 10%;
+  margin-top: 20px;
+  padding: 2%;
+  position: relative;
+  display:inline-block;
 }
 
 #content {
-  display: inline-block;
   width: 100%;
 }
 
@@ -126,5 +133,9 @@ body {
 }
 
 #bannerMenu {
+  display: inline-block;
+}
+
+.generate {
   display: inline-block;
 }

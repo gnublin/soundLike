@@ -3,21 +3,26 @@ class ApiController < ApplicationController
   protect_from_forgery except: :display
 
   def display
-    @apiContent = {"result" => "content"}.to_json
+    @apiContent = {"result" => "content"}
+        desc = "Error"
+        dbList = "none"
+        content = "none"
 
     case params[:type]
       when 'music_directories'
         dbList = Sqlite3.new('default')
         content = dbList.userList;
+        desc = "List directories"
       when 'users_add'
-        content = 'dd'
+        desc = "Add new user"
+        content = ''
       when 'users_manage'
-        desc = "Welcome to the user managment interface"
+        desc = "User managment interface"
         dbList = Sqlite3.new('default')
         content = dbList.userList;
     end
-
-    @apiContent = { 'data' => content, 'type' => params[:type], 'desc' => desc}
+    type = params['type'].split('_')
+    @apiContent = { 'data' => content, 'type' => type, 'desc' => desc}
 
     @apiContent.to_json
     respond_to do |format|
@@ -25,5 +30,28 @@ class ApiController < ApplicationController
    end
 
   end
+
+  def userManage
+
+    @dd = userManageParams
+    case params[:type]
+      when 'user_modify'
+    end
+    render "def"
+
+  end
+
+end
+
+private
+
+def userManageParams
+
+  userParams = params.clone
+
+  if userParams[:password] and !userParams[:password].empty? and !userParams[:userpassword].match('{MD5}')
+    userParams[:userpassword] = md5Pass userParams[:userpassword]
+  end
+
 
 end

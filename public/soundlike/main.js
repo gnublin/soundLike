@@ -24,6 +24,10 @@ function switchMainContent(activ) {
 
 }
 
+function clearIdHtml(id){
+  document.getElementById(id).innerHTML="";
+}
+
 
 function clickButton() {
 
@@ -32,6 +36,7 @@ function clickButton() {
 
   for (var a = 0, b = tabEl.length; a < b ; a++) {
     tabEl[a].addEventListener('click',function(){
+      clearIdHtml("mainFrame");
       switchTab(tabEl,this);
       switchMainContent(this);
     });
