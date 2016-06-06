@@ -7,7 +7,7 @@
         <%= hidden_field_tag(:name, k) %>
         <% if field == "password" %>
           <%= label_tag(:"#{field}", "#{field}") %>:
-          <%= password_field_tag(:"#{field}", content) %>
+          <%= password_field_tag(:"#{field}", content, id: "#{field}-#{k}") %>
           <div id="genPwdArea-<%= k %>" class="generate"><button id="genPwdButton-<%= k %>" >Generate</button><div id="genPwdClear-<%= k %>"></div></div>
         <% elsif field == "admin" %>
           <%= label_tag(:"#{field}", "#{field}") %>:
@@ -28,4 +28,3 @@
     <% end %>
   <% end %>
 <% end %>
-

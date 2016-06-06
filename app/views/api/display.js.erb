@@ -1,3 +1,25 @@
 <% if @apiContent['type'] %>
-document.getElementById('mainFrame').innerHTML="<%= escape_javascript (render :partial => @apiContent['type'][0], :remote => true)%>";
+  document.getElementById('mainFrame').innerHTML="<%= escape_javascript (render :partial => @apiContent['type'][0], :remote => true)%>";
+
+  var mdpGen = (document.querySelectorAll('.generate'));
+  var mdpGenLen = mdpGen.length;
+
+  if (mdpGenLen > 0) {
+    for (var i=0; i<mdpGenLen ; i++) {
+      var mdpIdName = mdpGen[i].id.split('-')[1];
+      var mdpButton = "genPwdButton-"+mdpIdName;
+      document.getElementById(mdpButton).addEventListener('click', function(event) {
+        event.preventDefault();
+				var genPass = document.createElement('script');
+				genPass.src = "/napi/mdpGen";
+				genPass.onload = genPassApply;
+				document.body.appendChild(genPass);
+
+      })
+    }
+  }
+
+  function genPassApply(idName){
+      console.log(to['ss']);
+  }
 <% end %>

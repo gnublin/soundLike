@@ -1,5 +1,5 @@
 class Sqlite3
-  def initialize(file)
+  def initialize(file='default')
     if file == 'default'
       configFile = "#{Rails.root}/config/soundLike-#{Rails.env}.yaml"
       yamlConnect = YAML::load_file(configFile)
@@ -87,12 +87,15 @@ class Sqlite3
     dbUserInfos.flatten[0]
   end
 
-  def query(dbName, tableName, type, query )
-    case 'type'
-      when 'insert'
-      when 'update'
-      when 'select'
+  def updateUser(login, data)
+    fieldsName = Array.new()
+    valuesData = Array.new()
+    data.each do |fields, values|
+     fieldsName << "#{fields} = '#{values}'"
     end
+   result = @db.execute("update users SET #{fieldsName.join(',')} where login=\'#{login}\'")
+
   end
+
 
 end
