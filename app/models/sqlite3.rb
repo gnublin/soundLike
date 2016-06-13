@@ -23,6 +23,7 @@ class Sqlite3
   end
 
   def createUser(data, admin)
+  p admin
     fieldsName = Array.new()
     valuesData = Array.new()
     data.each do |fields, values|

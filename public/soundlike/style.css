@@ -45,7 +45,9 @@ body {
 
 #banner {
   border-bottom: 4px solid #5896B2;
-/* position: fixed; */
+  width: 100%;
+  position: fixed;
+  background-color: white;
   z-index: 10;
 }
 
@@ -118,6 +120,8 @@ body {
 
 #content {
   width: 100%;
+  margin-top: 150px;
+  display: inline-block;
 }
 
 #bannerUser {
@@ -138,4 +142,15 @@ body {
 
 .generate {
   display: inline-block;
+}
+
+.passClear {
+	border-radius:5px;
+  display: inline-block;
+  width: 100px;
+  margin: 6px;
+  background-color: red;
+  color: white;
+  font-size: large;
+  text-align: center;
 }

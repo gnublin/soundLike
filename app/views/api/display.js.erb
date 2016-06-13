@@ -1,25 +1,32 @@
 <% if @apiContent['type'] %>
   document.getElementById('mainFrame').innerHTML="<%= escape_javascript (render :partial => @apiContent['type'][0], :remote => true)%>";
 
-  var mdpGen = (document.querySelectorAll('.generate'));
-  var mdpGenLen = mdpGen.length;
+  <% if @apiContent['type'][0] == "users" %>
+    var mdpGen = (document.querySelectorAll('.generate'));
+    var mdpGenLen = mdpGen.length;
 
-  if (mdpGenLen > 0) {
-    for (var i=0; i<mdpGenLen ; i++) {
-      var mdpIdName = mdpGen[i].id.split('-')[1];
-      var mdpButton = "genPwdButton-"+mdpIdName;
-      document.getElementById(mdpButton).addEventListener('click', function(event) {
-        event.preventDefault();
-				var genPass = document.createElement('script');
-				genPass.src = "/napi/mdpGen";
-				genPass.onload = genPassApply;
-				document.body.appendChild(genPass);
-
-      })
+    if (mdpGenLen > 0) {
+      for (var i=0; i<mdpGenLen ; i++) {
+        var mdpIdName = mdpGen[i].id.split('-')[1];
+        var mdpButton = "genPwdButton-"+mdpIdName;
+        document.getElementById(mdpButton).addEventListener('click', function(event) {
+          event.preventDefault();
+          var name = this.id.split('-')[1];
+	  			var genPass = document.createElement('script');
+	  			genPass.src = "/napi/mdpGen?name="+name;
+	  			genPass.onload = genPassApply;
+	  			document.body.appendChild(genPass);
+          document.body.removeChild(genPass);
+        })
+      }
     }
-  }
 
-  function genPassApply(idName){
-      console.log(to['ss']);
-  }
+    function genPassApply(){
+        var mdpMd5 = document.getElementById('password-'+mdpGen['name']);
+        mdpMd5.value=mdpGen['md5'];
+        var mdpClear = document.getElementById('genPwdClear-'+mdpGen['name']);
+        console.log(mdpClear)
+        mdpClear.innerHTML=mdpGen['clear'];
+    }
+  <% end %>
 <% end %>

@@ -2,13 +2,18 @@
 <% if @apiContent['data'].is_a? Hash %>
     <% @apiContent['data'].each do |k, v| %>
       <br /><br /><%= k %><br /><hr>
-      <%= form_tag("/api/user_modify", method: "get") do %>
+      <%= form_tag("/api/user_#{@apiContent['type'][1]}", method: "get") do %>
+        <% if @apiContent['type'][1] == "add" %>
+          <%= label_tag(:name) %>:
+          <%= text_field_tag(:name) %>
+        <% else %>
+          <%= hidden_field_tag(:name, k) %>
+        <% end %>
       <% v.each do |field,content| %>
-        <%= hidden_field_tag(:name, k) %>
         <% if field == "password" %>
           <%= label_tag(:"#{field}", "#{field}") %>:
           <%= password_field_tag(:"#{field}", content, id: "#{field}-#{k}") %>
-          <div id="genPwdArea-<%= k %>" class="generate"><button id="genPwdButton-<%= k %>" >Generate</button><div id="genPwdClear-<%= k %>"></div></div>
+          <div id="genPwdArea-<%= k %>" class="generate"><button id="genPwdButton-<%= k %>" >Generate</button><div id="genPwdClear-<%= k %>" class="passClear">N/a</div></div>
         <% elsif field == "admin" %>
           <%= label_tag(:"#{field}", "#{field}") %>:
           <% if content == 1 %>
