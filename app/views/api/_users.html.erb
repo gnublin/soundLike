@@ -5,14 +5,14 @@
       <%= form_tag("/api/user_#{@apiContent['type'][1]}", method: "get") do %>
         <% if @apiContent['type'][1] == "add" %>
           <%= label_tag(:name) %>:
-          <%= text_field_tag(:name) %>
+          <%= text_field_tag(:name, '', class: 'editable') %>
         <% else %>
           <%= hidden_field_tag(:name, k) %>
         <% end %>
       <% v.each do |field,content| %>
         <% if field == "password" %>
           <%= label_tag(:"#{field}", "#{field}") %>:
-          <%= password_field_tag(:"#{field}", content, id: "#{field}-#{k}") %>
+          <%= password_field_tag(:"#{field}", content, id: "#{field}-#{k}", class: 'editable') %>
           <div id="genPwdArea-<%= k %>" class="generate"><button id="genPwdButton-<%= k %>" >Generate</button><div id="genPwdClear-<%= k %>" class="passClear">N/a</div></div>
         <% elsif field == "admin" %>
           <%= label_tag(:"#{field}", "#{field}") %>:
@@ -23,12 +23,12 @@
           <% end %>
         <% else %>
           <%= label_tag(:"#{field}", "#{field}") %>:
-          <%= text_field_tag(:"#{field}") %>
+          <%= text_field_tag(:"#{field}", '', class: 'editable') %>
         <%end %>
       <% end %>
-      <%= submit_tag("Submit") %>
-      <% if k != "admin" %>
-        <button class="submit" id="user_remote_<%= k %>">Delete</button>
+      <%= submit_tag("Submit", disabled: true, class: "submit", id: "modif") %>
+      <% if k != "admin" and not @apiContent['type'][1] == "add"%>
+        <button class="deleteEntry" id="delete-<%= k %>">Delete</button>
       <% end %>
     <% end %>
   <% end %>

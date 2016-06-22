@@ -28,7 +28,6 @@ class SessionsController < ApplicationController
         else
           session['errMsg'] = 99
         end
-
      else
        session['errMsg'] = 99
      end

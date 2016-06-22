@@ -2,8 +2,61 @@
   document.getElementById('mainFrame').innerHTML="<%= escape_javascript (render :partial => @apiContent['type'][0], :remote => true)%>";
 
   <% if @apiContent['type'][0] == "users" %>
+
     var mdpGen = (document.querySelectorAll('.generate'));
     var mdpGenLen = mdpGen.length;
+    var submitEl = document.querySelectorAll('#modif');
+    var submitElSize = submitEl.length;
+    var submitElA
+
+    for (var a=0 ; a<submitElSize ; a++) {
+      var submitElA = submitEl[a]
+      var inputEl = submitElA.parentNode.querySelectorAll('.editable');
+      var inputElSize = inputEl.length
+      for (var b=0 ; b<inputElSize ; b++) {
+        var inputElEdit = inputEl[b]
+          inputElEdit.addEventListener('input', function(){
+            checkInput(this);
+          });
+      }
+    }
+
+    var deleteAction = document.querySelectorAll('.deleteEntry')
+    nbDeleteAction = deleteAction.length
+    if (nbDeleteAction>0) {
+      for (var c=0; c<nbDeleteAction; c++) {
+        deleteButton = deleteAction[c]
+        deleteButton.addEventListener('click', function(event){
+          event.preventDefault();
+          whichDeletion = this.id.split(/delete-/).join('')
+          deleteEntry(whichDeletion)
+        })
+      }
+    }
+
+    function checkInput(inputEl){
+
+      var remove = false;
+      inputElList = inputEl.parentNode.querySelectorAll('.editable')
+      var inputElSize = inputElList.length
+      for (var b=0 ; b<inputElSize ; b++) {
+        var inputElEdit = inputElList[b]
+          if (inputElEdit.value.length > 0 ) {
+            remove = true;
+          }
+          else {
+            remove = false;
+            break;
+          }
+      }
+      if (remove == true) {
+       inputElEdit.parentNode.querySelector("#modif").removeAttribute('disabled')
+      }
+      else {
+       inputElEdit.parentNode.querySelector("#modif").setAttribute('disabled', true)
+      }
+    }
+
 
     if (mdpGenLen > 0) {
       for (var i=0; i<mdpGenLen ; i++) {
@@ -25,8 +78,41 @@
         var mdpMd5 = document.getElementById('password-'+mdpGen['name']);
         mdpMd5.value=mdpGen['md5'];
         var mdpClear = document.getElementById('genPwdClear-'+mdpGen['name']);
-        console.log(mdpClear)
         mdpClear.innerHTML=mdpGen['clear'];
+        checkInput(mdpMd5);
     }
+
+    function deleteEntry(whichEl) {
+      console.log(whichEl)
+      var lightbox = document.createElement("div");
+      var dimmer = document.createElement("div");
+      dimmer.className = 'dimmer';
+      lightbox.id = 'lightbox';
+
+      document.body.appendChild(dimmer);
+      document.body.appendChild(lightbox);
+
+      lightbox.style.visibility = 'visible';
+      lightbox.style.top = '30%';
+      lightbox.style.left = '30%';
+
+      lightbox.innerHTML = '\
+          <p>Are you sure you want to delete "'+ whichEl +'"?</p>\
+          <form method="get" action="/api/user_delete" >\
+          <input type="hidden" name="name" value="'+ whichEl +'" />\
+          <div class="deleteUser"><input class="subDelEntry" type="submit" value="Yes" />\
+          <button class="cancelDeleteUser">No</button></div>\
+          </form>\
+          ';
+
+      var cancelEl = lightbox.querySelector('.cancelDeleteUser');
+      cancelEl.addEventListener('click', function(event){
+          var dimmer = document.querySelectorAll('.dimmer')[0]
+          var lightbox = document.getElementById('lightbox')
+          document.body.removeChild(lightbox);
+          document.body.removeChild(dimmer);
+      })
+    }
+
   <% end %>
 <% end %>

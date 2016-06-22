@@ -95,7 +95,10 @@ class Sqlite3
      fieldsName << "#{fields} = '#{values}'"
     end
    result = @db.execute("update users SET #{fieldsName.join(',')} where login=\'#{login}\'")
+  end
 
+  def delUser(name)
+   result = @db.execute("delete from users where login=\'#{name}\'")
   end
 
 

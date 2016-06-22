@@ -1,6 +1,7 @@
 'use strict';
 
 clickButton();
+disableErrMsg();
 
 function switchMainContent(activ) {
 

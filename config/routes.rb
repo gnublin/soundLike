@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get '/login', to:  'sessions#login'
+  get '/logout', to:  'sessions#log_out'
   get '/install', to: 'install#install'
   get '/save', to: 'install#save'
   get '/music', to: 'soundlike#music'

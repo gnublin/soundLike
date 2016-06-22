@@ -3,6 +3,7 @@ function disableErrMsg() {
 
   var errMsgEl = document.getElementById('msgErr');
   var errMsgContent = document.getElementById('msgContent').innerHTML;
+  console.log(errMsgContent);
   if (errMsgContent) {
     if (errMsgContent.match(/^OK*/)) {
       errMsgEl.style.backgroundColor = '#8ABF7C';
