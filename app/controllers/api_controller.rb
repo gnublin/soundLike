@@ -33,7 +33,6 @@ class ApiController < ApplicationController
 
   def userManage
 
-p params
     userParams = userManageParams
     return_message = ""
     sqlite_params = userParams.clone
@@ -61,24 +60,29 @@ p params
             end
             sqlite_params.delete(:admin)
             result_user = sqlite_co.createUser(sqlite_params, sqlite_params_admin)
-            session[:errMsg] = 0
+            session[:errMsg] = 1.0
           else
-            result_user = "An error occurred"
+            session[:errMsg] = 1.8
           end
         when 'user_manage'
           if user_exist
-            sqlite_params_login = sqlite_params[:login]
+            sqlite_params_login = sqlite_params[:name]
             sqlite_params.delete(:login)
             sqlite_params.delete(:name)
+            unless sqlite_params[:admin]
+              sqlite_params[:admin] = 0
+            end
             result_user = sqlite_co.updateUser(sqlite_params_login, sqlite_params)
+            session[:errMsg] = 2.0
           else
-            result_user = "An error occurred"
+            session[:errMsg] = 2.8
           end
         when 'user_delete'
           if user_exist
             result_user = sqlite_co.delUser(sqlite_params[:name])
+            session[:errMsg] = 2.1
           else
-            result_user = "An error occurred"
+            session[:errMsg] = 2.9
           end
       end
       @dd = result_user

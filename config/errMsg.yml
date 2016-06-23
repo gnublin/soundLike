@@ -1,0 +1,9 @@
+0: "OK: Operation successfull"
+1.0: "OK: User has been successfully created"
+1.8: "NOK: User already exist"
+1.9: "NOK: An error occured for user creation action"
+2.0: "OK: User has been modify successfully"
+2.1: "OK: user has been succssfully deleted"
+2.8: "NOK: User doesn't exist"
+2.9: "NOK: An error occured for user modification action"
+

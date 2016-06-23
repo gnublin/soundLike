@@ -6,7 +6,7 @@ function disableErrMsg() {
   console.log(errMsgContent);
   if (errMsgContent) {
     if (errMsgContent.match(/^OK*/)) {
-      errMsgEl.style.backgroundColor = '#8ABF7C';
+      errMsgEl.style.backgroundColor = '#5896B2';
     }
     else if (errMsgContent.match(/^NOK*/)) {
       errMsgEl.style.backgroundColor = 'red';

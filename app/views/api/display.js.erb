@@ -15,6 +15,7 @@
       var inputElSize = inputEl.length
       for (var b=0 ; b<inputElSize ; b++) {
         var inputElEdit = inputEl[b]
+        checkInput(inputElEdit);
           inputElEdit.addEventListener('input', function(){
             checkInput(this);
           });
@@ -93,16 +94,18 @@
       document.body.appendChild(lightbox);
 
       lightbox.style.visibility = 'visible';
-      lightbox.style.top = '30%';
-      lightbox.style.left = '30%';
+      lightbox.style.top = '25%';
+      lightbox.style.left = '40%';
 
       lightbox.innerHTML = '\
-          <p>Are you sure you want to delete "'+ whichEl +'"?</p>\
+          <p>Are you sure you want to delete "'+ whichEl +'" user?</p>\
+          <div class="formDel">\
           <form method="get" action="/api/user_delete" >\
           <input type="hidden" name="name" value="'+ whichEl +'" />\
           <div class="deleteUser"><input class="subDelEntry" type="submit" value="Yes" />\
           <button class="cancelDeleteUser">No</button></div>\
           </form>\
+          </div>\
           ';
 
       var cancelEl = lightbox.querySelector('.cancelDeleteUser');

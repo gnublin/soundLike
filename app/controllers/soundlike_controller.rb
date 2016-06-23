@@ -2,6 +2,9 @@ class SoundlikeController < ApplicationController
 
   def initialize
     @permissionMenu = YAML::load_file("#{Rails.root}/config/soundLikeApp.yaml")
+    if File.exist?("#{Rails.root}/config/errMsg.yml")
+      @errMsg = YAML::load_file("#{Rails.root}/config/errMsg.yml")
+    end
   end
 
   def not_found
@@ -12,10 +15,8 @@ class SoundlikeController < ApplicationController
     unless session[:user_id]
       redirect_to '/login'
     else
-      if session[:errMsg] == 0
-        @msgErr = "OK: success"
-      elsif session[:errMsg]
-        @msgErr = "NOK: an error occured"
+      if @errMsg[session[:errMsg]]
+        @msgErr = @errMsg[session[:errMsg]]
       end
       session.delete(:errMsg)
       username = session['user_id']

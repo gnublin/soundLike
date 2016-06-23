@@ -7,24 +7,24 @@
   </head>
   <body>
   <noscript><div class="javascriptMessage">You should to enable JavaScript to continue!</div></noscript>
-    <div id="banner">
+  <div id="banner">
+    <div id="msgErr">
+      <p id="msgContent"><%= @msgErr %></p>
+    </div>
     <div id="bannerLogo">
       <img src='/logo2.png'/>
     </div>
     <div id="bannerMenu">
- <%= render 'menu' %>
- </div>
-<div id="bannerUser">    Welcome <%= session['user_id'] %>!</div>
+      <%= render 'menu' %>
     </div>
+    <div id="bannerUser">    Welcome <%= session['user_id'] %>!</div>
+  </div>
     <div id="content">
     <div id="menuLeft">
  <%= render 'menuLeft' %>
  </div>
 
     <div id="mainFrame">
-     <div id="msgErr">
-      <p id="msgContent"><%= @msgErr %></p>
-     </div>
     </div>
   </div>
 

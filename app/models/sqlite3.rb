@@ -91,10 +91,13 @@ class Sqlite3
   def updateUser(login, data)
     fieldsName = Array.new()
     valuesData = Array.new()
-    data.each do |fields, values|
-     fieldsName << "#{fields} = '#{values}'"
+    data.each do |field, value|
+      if field == 'admin' and value == "is_admin"
+        value = 1
+      end
+     fieldsName << "#{field} = '#{value}'"
     end
-   result = @db.execute("update users SET #{fieldsName.join(',')} where login=\'#{login}\'")
+    result = @db.execute("update users SET #{fieldsName.join(',')} where login=\'#{login}\'")
   end
 
   def delUser(name)
