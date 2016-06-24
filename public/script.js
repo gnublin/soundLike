@@ -11,7 +11,7 @@ function disableErrMsg() {
     else if (errMsgContent.match(/^NOK*/)) {
       errMsgEl.style.backgroundColor = 'red';
     }
-    setTimeout(function(){errMsgEl.classList.toggle('fade')}, 500)
+    setTimeout(function(){errMsgEl.classList.toggle('fade')}, 1500)
   }
 
 }

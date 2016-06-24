@@ -12,6 +12,13 @@ class SoundlikeController < ApplicationController
   end
 
   def music
+
+##### A DEPLACER #####
+#    if @permissionMenu.dig('mp3', 'dir')
+#      @musicDir = @permissionMenu['mp3']['dir']
+#    else
+#      session[:errMsg] = 3.9
+#    end
     unless session[:user_id]
       redirect_to '/login'
     else
