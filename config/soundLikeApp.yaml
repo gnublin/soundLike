@@ -1,4 +1,6 @@
 ---
+mp3:
+  dir: '/hmoe/projects/soundLike/mp3'
 menu:
   admin: ['music', 'users']
   other: ['music']

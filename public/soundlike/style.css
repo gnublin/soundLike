@@ -165,7 +165,7 @@ body {
   padding-right: 30px;
   position: fixed;
   opacity: 0.8;
-  transition: opacity 1s;
+  transition: opacity 0.3s;
   z-index: 22;
 }
 
