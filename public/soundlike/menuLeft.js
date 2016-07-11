@@ -1,7 +1,8 @@
 
 function buttonLeftEntry(idName){
 
-  var leftEntryEl = document.getElementById("list-"+idName).querySelectorAll('.leftEntry')
+  var leftEntryEl = document.getElementById("left-"+idName).querySelectorAll('.leftEntry')
+  console.log(leftEntryEl)
   for (var e = 0, f = leftEntryEl.length; e < f; e++) {
     leftEntryEl[e].addEventListener('click', function(){
       clearIdHtml("mainFrame");

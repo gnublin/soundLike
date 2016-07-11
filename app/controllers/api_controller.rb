@@ -10,8 +10,7 @@ class ApiController < ApplicationController
 
     case params[:type]
       when 'music_directories'
-        dbList = Sqlite3.new('default')
-        content = dbList.userList;
+        content = "dddaaaassssqqqq"
         desc = "List directories"
       when 'users_add'
         desc = "Add new user"

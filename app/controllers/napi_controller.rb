@@ -1,21 +1,42 @@
 class NapiController < ApplicationController
 
-  def default
-    case params[:id]
-      when "mdpGen"
+  def show
+    err = false
+    id = params[:id]
+
+    case id
+      when 'mdpGen'
 		    size = 8
 		    if params[:size]
-					size = param[:size]
+		    	size = param[:size]
 		    end
 		    password = SecureRandom.urlsafe_base64(size-2)
 		    mdpClear = password.gsub(/-/,'0').gsub(/_/,'4')
         mdpMd5 = md5 mdpClear
         @dd = {:clear=> mdpClear, :md5 => mdpMd5, :name => params[:name]}
-      else
-        @dd={"rr"=> 'dd'}
-      end
-      @dd = "var #{params[:id]} = #{@dd.to_json};"
-    render 'api/def', content_type: 'application/javascript'
-  end
+        @dd = "var #{params[:id]} = #{@dd.to_json};"
 
+      when 'redisGetInfo'
+        ping = $redis.ping
+        unless ping == "PONG"
+          err=true
+          session[:errMsg] = 5.0
+        else
+          r_key = "#{session['user_id']}-info"
+          info = $redis.get(r_key)
+          if info.nil?
+            redis_set_base = redisDefault(r_key)
+            info = $redis.get(r_key)
+          end
+        end
+        @dd = "var redisContent = '#{info}';"
+      end
+
+    unless err
+      render 'api/def', content_type: 'application/javascript'
+    else
+      redirect_to '/music'
+   end
+
+  end
 end

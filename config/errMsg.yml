@@ -7,3 +7,4 @@
 2.8: "NOK: User doesn't exist"
 2.9: "NOK: An error occured for user modification action"
 3.9: "NOK: Setting mp3 music missing in yml app configuration file"
+5.0: "NOK: Redis server problem. Please verify your configuration"

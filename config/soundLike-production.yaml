@@ -1,8 +1,6 @@
 ---
-Mp3:
-  path: mp3
 Sqlite3:
-  path: db/development.db
+  path: db/production.db
 Ldap:
   host: localhost
   port: '389'

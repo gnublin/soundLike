@@ -54,4 +54,9 @@ module ApplicationHelper
     end
   end
 
+
+  def redisDefault(r_key)
+  $redis.set(r_key, {'path': $configFile['Mp3']['path'], 'status': {'shuffled': false, 'repeated': false, 'activeTrack': 0, 'inProgress': 0, 'volume': 05, 'volumeMuted': false }}.to_json)
+  end
+
 end
