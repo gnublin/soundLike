@@ -1,5 +1,7 @@
+jsLeft=false
 
 function buttonLeftEntry(idName){
+  if (jsLeft != true) { 
   var leftEntryEl = document.getElementById("left-"+idName).querySelectorAll('.leftEntry')
   for (var e = 0, f = leftEntryEl.length; e < f; e++) {
     console.log(leftEntryEl[e])
@@ -8,9 +10,10 @@ function buttonLeftEntry(idName){
       clearIdHtml("mainFrame");
       subMenuActiv(leftEntryEl,this.id);
       subMenu(this);
+      jsLeft=true;
     })
   }
-}
+}}
 
 function subMenuActiv(listEl, idActiv) {
 
