@@ -1,6 +1,6 @@
 ---
 Mp3:
-  path: mp3
+  base: '/'
 Sqlite3:
   path: db/development.db
 Ldap:

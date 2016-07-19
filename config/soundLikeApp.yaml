@@ -1,6 +1,6 @@
 ---
-p3:
-  dir: '/hmoe/projects/soundLike/mp3'
+mp3BaseDir:
+  dir: '/home/gauth/projects/soundLike/mp3'
 menu:
   admin: ['music', 'users']
   other: ['music']

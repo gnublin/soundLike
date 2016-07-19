@@ -3,6 +3,7 @@
 
   <% if @apiContent['type'][0] == "users" %>
 
+console.log('rr')
     var mdpGen = (document.querySelectorAll('.generate'));
     var mdpGenLen = mdpGen.length;
     var submitEl = document.querySelectorAll('#modif');
@@ -116,6 +117,15 @@
           document.body.removeChild(dimmer);
       })
     }
+
+  <% elsif @apiContent['type'][0] == "music" %>
+      var dirAllEl = document.querySelectorAll('.dir');
+      for (var a=0, b=dirAllEl.length ; a < b ; a++) {
+        console.log(dirAllEl[a])
+        dirAllEl[a].addEventListener('click', function(event){console.log("dd")})
+//        console.log(dirAllEl[a].getAttribute('data-name'))
+//        console.log(dirAllEl[a].parentNode.querySelector('.fa-plus-square'))
+      }
 
   <% end %>
 <% end %>

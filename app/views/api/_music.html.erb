@@ -1,2 +1,25 @@
 <div class="titleEl"><%= @apiContent['desc'] %></div>
 <%= @apiContent['data'] %>
+<br><br>
+
+<div id="list_el">
+<% @apiContent['data']['dir'].sort.each do |element| %>
+  <div class="dir_el">
+    <i class="ico-fa fa fa-plus-square"></i><i class="ico-fa fa fa-folder"></i>
+    <div class="ico-fa dir" data-name="<%= element %>">
+      <%= element %>
+    </div>
+  </div>
+<% end %>
+<br/>
+<% @apiContent['data']['files'].sort.each do |element| %>
+  <div class="dir_el">
+    <i class="ico-fa fa fa-play-circle"></i><i class="ico-fa fa fa-plus-circle"></i>
+    <div class="ico-fa file" data-name="<%= element %>">
+    <%= element %>
+    </div>
+  </div>
+<% end %>
+</div>
+
+

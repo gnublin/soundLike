@@ -10,7 +10,38 @@ class ApiController < ApplicationController
 
     case params[:type]
       when 'music_directories'
-        content = "dddaaaassssqqqq"
+        r_key = "#{session['user_id']}-info"
+        r_content = $redis.get(r_key)
+        if r_content.nil?
+          redis_set_base = redisDefault(r_key)
+          r_content = $redis.get(r_key)
+        end
+        j_content = JSON.parse(r_content)['path']
+        current_path = j_content['base'] + j_content['current']
+        dir_contain = Dir.entries(current_path)
+        list_files = Array.new
+        list_dir = Array.new
+				list_pict = Array.new
+        dir_contain.each do |entry|
+					if entry == '.'
+					    next
+					end
+					if entry == '..' and j_content['current'] != '/'
+					    list_dir<<".."
+					elsif entry == '..'
+					    next
+					elsif File.directory?("#{current_path}/#{entry}")
+					    list_dir << "#{entry}"
+					elsif entry.include?(".mp3")
+					    list_files << "#{entry}"
+					elsif entry.include?(".jpg")
+					   list_pict << "#{@path}/#{entry}"
+					end
+        end
+				content = Hash.new
+				content['dir'] = list_dir
+				content['files'] = list_files
+				content['pict'] = list_pict if list_pict.size > 0 || "none" 
         desc = "List directories"
       when 'users_add'
         desc = "Add new user"

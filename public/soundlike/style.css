@@ -198,3 +198,8 @@ body {
 .music_ed {
   border: 1px solid black;
 }
+
+.ico-fa {
+  display: inline-block;
+  margin-left: 10px;
+}
