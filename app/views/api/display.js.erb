@@ -3,7 +3,6 @@
 
   <% if @apiContent['type'][0] == "users" %>
 
-console.log('rr')
     var mdpGen = (document.querySelectorAll('.generate'));
     var mdpGenLen = mdpGen.length;
     var submitEl = document.querySelectorAll('#modif');
@@ -17,9 +16,9 @@ console.log('rr')
       for (var b=0 ; b<inputElSize ; b++) {
         var inputElEdit = inputEl[b]
         checkInput(inputElEdit);
-          inputElEdit.addEventListener('input', function(){
-            checkInput(this);
-          });
+        inputElEdit.addEventListener('input', function(){
+          checkInput(this);
+        });
       }
     }
 
@@ -119,13 +118,22 @@ console.log('rr')
     }
 
   <% elsif @apiContent['type'][0] == "music" %>
+
       var dirAllEl = document.querySelectorAll('.dir');
+      var subEl = document.querySelector('.leftEntryActiv')
+
       for (var a=0, b=dirAllEl.length ; a < b ; a++) {
-        console.log(dirAllEl[a])
-        dirAllEl[a].addEventListener('click', function(event){console.log("dd")})
-//        console.log(dirAllEl[a].getAttribute('data-name'))
-//        console.log(dirAllEl[a].parentNode.querySelector('.fa-plus-square'))
+        dirAllEl[a].addEventListener('click', function(){
+          var dir = this.getAttribute('data-name');
+          setRedis("titi","{\"path\":{\"current\":\""+dir+"\"}}", function(){
+            subMenu("music_directories")
+          })
+        })
+        plusDir = dirAllEl[a].parentNode.querySelector('.fa-plus-square');
+        plusDir.addEventListener('click', function(event){console.log(this)})
       }
 
   <% end %>
 <% end %>
+
+

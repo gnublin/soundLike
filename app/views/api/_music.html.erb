@@ -1,21 +1,24 @@
 <div class="titleEl"><%= @apiContent['desc'] %></div>
-<%= @apiContent['data'] %>
-<br><br>
-
+<br>
+<div id="current-path">
+Current path <%= @apiContent['data']['current'] %>
+</div>
+<br>
+<div class="music-action"><p class="m-a del-playlist">Remove all element from playlist</p><p class="m-a app-all">Append all current element in playlist</p></div>
 <div id="list_el">
-<% @apiContent['data']['dir'].sort.each do |element| %>
+<% @apiContent['data']['dir'].each do |element, name| %>
   <div class="dir_el">
-    <i class="ico-fa fa fa-plus-square"></i><i class="ico-fa fa fa-folder"></i>
-    <div class="ico-fa dir" data-name="<%= element %>">
+    <i class="ico-fa ico-pt fa fa-plus-square"></i><i class="ico-fa fa fa-folder"></i>
+    <div class="ico-fa ico-pt dir" data-name="<%= name %>">
       <%= element %>
     </div>
   </div>
 <% end %>
 <br/>
-<% @apiContent['data']['files'].sort.each do |element| %>
+<% @apiContent['data']['files'].each do |element, name| %>
   <div class="dir_el">
-    <i class="ico-fa fa fa-play-circle"></i><i class="ico-fa fa fa-plus-circle"></i>
-    <div class="ico-fa file" data-name="<%= element %>">
+    <i class="ico-fa ico-pt fa fa-plus-circle"></i><i class="ico-fa ico-pt fa fa-play-circle"></i>
+    <div class="ico-fa file" data-name="<%= name %>">
     <%= element %>
     </div>
   </div>

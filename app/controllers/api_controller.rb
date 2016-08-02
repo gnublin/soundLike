@@ -17,28 +17,36 @@ class ApiController < ApplicationController
           r_content = $redis.get(r_key)
         end
         j_content = JSON.parse(r_content)['path']
-        current_path = j_content['base'] + j_content['current']
+        current_path = j_content['current']
         dir_contain = Dir.entries(current_path)
-        list_files = Array.new
-        list_dir = Array.new
-				list_pict = Array.new
-        dir_contain.each do |entry|
+        list_files = Hash.new
+        list_dir = Hash.new
+				list_pict = Hash.new
+        dir_contain.sort.each do |entry|
 					if entry == '.'
 					    next
 					end
-					if entry == '..' and j_content['current'] != '/'
-					    list_dir<<".."
+					if entry == '..' and j_content['current'] != $mp3BaseDir
+              test = current_path.clone
+              test = test.split('/')
+              last = test.pop
+              test = test.join('/')
+					    list_dir['Up'] = test
 					elsif entry == '..'
 					    next
 					elsif File.directory?("#{current_path}/#{entry}")
-					    list_dir << "#{entry}"
+					    list_dir[entry] = "#{current_path}/#{entry}"
 					elsif entry.include?(".mp3")
-					    list_files << "#{entry}"
+					    list_files[entry] = "#{current_path}/#{entry}"
 					elsif entry.include?(".jpg")
-					   list_pict << "#{@path}/#{entry}"
+					   list_pict[entry] = "#{current}/#{entry}"
 					end
         end
 				content = Hash.new
+        test1 = $mp3BaseDir.split('/')
+        test = "#{current_path}/".split('/')
+        curr = test - test1
+        content['current'] = "/#{curr.join('/')}"
 				content['dir'] = list_dir
 				content['files'] = list_files
 				content['pict'] = list_pict if list_pict.size > 0 || "none" 

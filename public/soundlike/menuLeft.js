@@ -1,10 +1,10 @@
 jsLeft=false
 
 function buttonLeftEntry(idName){
-  if (jsLeft != true) { 
-  var leftEntryEl = document.getElementById("left-"+idName).querySelectorAll('.leftEntry')
+
+  if (jsLeft != true) {
+  var leftEntryEl = document.querySelectorAll('.leftEntry')
   for (var e = 0, f = leftEntryEl.length; e < f; e++) {
-    console.log(leftEntryEl[e])
     leftEntryEl[e].removeEventListener
     leftEntryEl[e].addEventListener('click', function(){
       clearIdHtml("mainFrame");
@@ -28,11 +28,17 @@ function subMenuActiv(listEl, idActiv) {
 
 }
 
-function subMenu(subEl){
+function subMenu(subEl,extra=''){
 
-  var reqId = subEl.id
+  if (typeof(subEl) == 'object') {
+    var reqId = subEl.id;
+  }
+  else {
+    var reqId = subEl;
+  }
+
   get = document.createElement('script');
-  get.src = "api.js?type="+reqId;
+  get.src = "api.js?type="+reqId+extra;
   get.id = "getMenuEl"
   document.body.appendChild(get);
   document.body.removeChild(get);

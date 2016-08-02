@@ -30,6 +30,22 @@ class NapiController < ApplicationController
           end
         end
         @dd = "var redisContent = '#{info}';"
+
+      when 'redisSet'
+        ping = $redis.ping
+        unless ping == "PONG"
+          err=true
+          session[:errMsg] = 5.0
+        else
+          r_key = "#{session['user_id']}-info"
+          getInfo = $redis.get(r_key)
+          r_val = params['value']
+          r_val = JSON.parse(r_val)
+          getInfo = JSON.parse(getInfo)
+          getInfo['path']['current'] = r_val['path']['current']
+          p getInfo
+          info = $redis.set(r_key, getInfo.to_json)
+        end
       end
 
     unless err

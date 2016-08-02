@@ -60,3 +60,19 @@ function switchTab(all, activ) {
 
 }
 
+function setRedis(key, val, callback) {
+
+  var redisUrl = "key="+key+"&value="+val
+  var redisD = document.createElement('script');
+
+  redisD.src = "/napi/redisSet?"+redisUrl;
+
+  if (callback != "") {
+    redisD.onload = callback;
+  }
+
+  document.body.appendChild(redisD);
+  document.body.removeChild(redisD);
+}
+
+
