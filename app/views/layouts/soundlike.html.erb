@@ -11,13 +11,24 @@
     <div id="msgErr">
       <p id="msgContent"><%= @msgErr %></p>
     </div>
-    <div id="bannerLogo">
+    <div id="banner-logo">
       <img src='/logo2.png'/>
     </div>
-    <div id="bannerMenu">
+    <div id="banner-menu">
       <%= render 'menu' %>
     </div>
-    <div id="bannerUser">    Welcome <%= session['user_id'] %>!</div>
+    <div id="banner-player">
+      <i class="ba-player player-picture"></i>
+      <i class="ba-player player-preview fa fa-fw fa-step-backward fa-3x"></i>
+      <i class="ba-player player-stop fa fa-fw fa-stop fa-3x"></i>
+      <i class="ba-player player-play fa fa-fw fa-play fa-3x"></i>
+      <i class="ba-player player-next fa fa-fw fa-step-forward fa-3x"></i>
+      <i class="ba-player player-repeaa fa fa-fw fa-repeat fa-3x"></i>
+      <i class="ba-player player-shuffe fa fa-fw fa-random fa-3x"></i>
+    </div>
+    <div id="banner-user" >
+     <i class="ba-logo fa fa-user"></i><p class="welcome">Welcome <%= session['user_id'] %>!</p><i class="ba-logo fa fa-sign-out"></i>
+    </div>
   </div>
     <div id="content">
     <div id="menuLeft">
@@ -31,5 +42,6 @@
 
   <script src="/script.js"  type="text/javascript"></script>
   <script src="/soundlike/main.js"  type="text/javascript"></script>
+  <script src="/player.js"  type="text/javascript"></script>
   </body>
 </html>
