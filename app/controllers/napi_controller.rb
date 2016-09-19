@@ -29,7 +29,7 @@ class NapiController < ApplicationController
             info = $redis.get(r_key)
           end
         end
-        @dd = "var redisContent = '#{info}';"
+        @dd = "var redisContent = #{info};"
 
       when 'redisSet'
         ping = $redis.ping
@@ -40,12 +40,15 @@ class NapiController < ApplicationController
           r_key = "#{session['user_id']}-info"
           getInfo = $redis.get(r_key)
           r_val = params['value']
+          p r_val.is_a? Hash
           r_val = JSON.parse(r_val)
           getInfo = JSON.parse(getInfo)
-          getInfo['path']['current'] = r_val['path']['current']
-          p getInfo
+
+          p params['key']
+          getInfo[params['key']] = r_val
           info = $redis.set(r_key, getInfo.to_json)
         end
+        @dd = "var redisContent = '#{info}';"
       end
 
     unless err

@@ -125,13 +125,15 @@
       for (var a=0, b=dirAllEl.length ; a < b ; a++) {
         dirAllEl[a].addEventListener('click', function(){
           var dir = this.getAttribute('data-name');
-          setRedis("titi","{\"path\":{\"current\":\""+dir+"\"}}", function(){
+          redisContent['path']['current'] = dir
+          setRedis("path", JSON.stringify(redisContent['path']), function(){
             subMenu("music_directories")
           })
         })
         plusDir = dirAllEl[a].parentNode.querySelector('.fa-plus-square');
         plusDir.addEventListener('click', function(event){console.log(this)})
       }
+      getRedis("")
 
   <% end %>
 <% end %>

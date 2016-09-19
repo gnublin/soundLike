@@ -18,13 +18,19 @@
       <%= render 'menu' %>
     </div>
     <div id="banner-player">
-      <i class="ba-player player-picture"></i>
-      <i class="ba-player player-preview fa fa-fw fa-step-backward fa-3x"></i>
-      <i class="ba-player player-stop fa fa-fw fa-stop fa-3x"></i>
-      <i class="ba-player player-play fa fa-fw fa-play fa-3x"></i>
-      <i class="ba-player player-next fa fa-fw fa-step-forward fa-3x"></i>
-      <i class="ba-player player-repeaa fa fa-fw fa-repeat fa-3x"></i>
-      <i class="ba-player player-shuffe fa fa-fw fa-random fa-3x"></i>
+      <div class= "player-buttons">
+        <i player-button="picture" class="ba-player" > <img class="sound-picture" src="/equa.svg" /></i>
+        <i player-button="preview" class="ba-player fa fa-fw fa-step-backward fa-2x"></i>
+        <i player-button="stop" class="ba-player fa fa-fw fa-stop fa-2x"></i>
+        <i player-button="player" class="ba-player fa fa-fw fa-play fa-2x"></i>
+        <i player-button="next" class="ba-player fa fa-fw fa-step-forward fa-2x"></i>
+        <i player-button="repeated" class="ba-player fa fa-fw fa-repeat fa-2x"></i>
+        <i player-button="shuffled" class="ba-player fa fa-fw fa-random fa-2x"></i>
+        <i player-button="muted" class="ba-player fa fa-fw fa-volume-off fa-2x"></i>
+      </div>
+      <div class="player-audio">
+        <audio id="player-timeline" ></audio>
+      </div>
     </div>
     <div id="banner-user" >
      <i class="ba-logo fa fa-user"></i><p class="welcome">Welcome <%= session['user_id'] %>!</p><i class="ba-logo fa fa-sign-out"></i>

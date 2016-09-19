@@ -76,3 +76,16 @@ function setRedis(key, val, callback) {
 }
 
 
+function getRedis(callback) {
+
+  var redisG = document.createElement('script');
+
+  redisG.src = "/napi/redisGetInfo?";
+
+  if (callback != "") {
+    redisG.onload = callback;
+  }
+
+  document.body.appendChild(redisG);
+  document.body.removeChild(redisG);
+}
