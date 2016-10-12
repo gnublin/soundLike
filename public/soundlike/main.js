@@ -60,12 +60,17 @@ function switchTab(all, activ) {
 
 }
 
-function setRedis(key, val, callback) {
+function setRedis(method, key, val, callback) {
 
-  var redisUrl = "key="+key+"&value="+val
+  if (method == "") {
+    method = "replace"
+  }
+
+  var redisUrl = "method="+method+"&key="+key+"&value="+val
   var redisD = document.createElement('script');
 
   redisD.src = "/napi/redisSet?"+redisUrl;
+  redisD.method = 'POST';
 
   if (callback != "") {
     redisD.onload = callback;

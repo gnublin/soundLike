@@ -39,13 +39,14 @@ class NapiController < ApplicationController
         else
           r_key = "#{session['user_id']}-info"
           getInfo = $redis.get(r_key)
-          r_val = params['value']
-          p r_val.is_a? Hash
-          r_val = JSON.parse(r_val)
+          r_val = JSON.parse(params['value'])
           getInfo = JSON.parse(getInfo)
-
-          p params['key']
-          getInfo[params['key']] = r_val
+          case params['method']
+          when 'replace'
+            getInfo[params['key']] = r_val
+          when 'append'
+            getInfo[params['key']] << r_val
+          end
           info = $redis.set(r_key, getInfo.to_json)
         end
         @dd = "var redisContent = '#{info}';"

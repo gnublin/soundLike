@@ -56,7 +56,8 @@ module ApplicationHelper
 
 
   def redisDefault(r_key)
-    $redis.set(r_key, {'path': {'current': $mp3BaseDir}, 'status': {'shuffled': false, 'repeated': false, 'muted': false }}.to_json)
+    $redis.set(r_key, {'path': {'current': $mp3BaseDir}, 'status': {'shuffled': false, 'repeated': false, 'muted': false }, 'playlist':[], 'currentStatus': {'trackNumber':0, 'trackTime': 0}}.to_json)
+
   end
 
 end

@@ -18,7 +18,7 @@ Current path <%= @apiContent['data']['current'] %>
 <% @apiContent['data']['files'].each do |element, name| %>
   <div class="dir_el">
     <i class="ico-fa ico-pt fa fa-plus-circle"></i><i class="ico-fa ico-pt fa fa-play-circle"></i>
-    <div class="ico-fa file" data-name="<%= name %>">
+    <div class="ico-fa file" data-path="<%= name %>" data-name="<%= element %>">
     <%= element %>
     </div>
   </div>

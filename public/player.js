@@ -1,17 +1,50 @@
 
 getRedis(setButton);
 getRedis(colorizeButton);
+getRedis(refreshPlaylist);
+getRedis(setPlayButton);
 
 
 var colorActive = "#5896B2";
 var colorDeactive = "#D8D8D8";
 var state = "";
 
-allElements = document.querySelectorAll("[player-button]");
+function setPlayButton() {
+  playingAllButton = document.querySelectorAll('.playing');
+  playingAllButtonSize = playingAllButton.length;
 
-//for (var p=0, q=allElements.length; p<q ; p++) {
-//    allElements[p].addEventListener('click',clickStatus);
-//}
+  for (var t=0; t<playingAllButtonSize; t++) {
+    var playingButton = playingAllButton[t];
+    switch (playingButton.getAttribute('player-button')) {
+      case 'play':
+        playingButton.addEventListener('click',function() {
+            redisContent['currentStatus']['paused'] = false;
+            play(redisContent['currentStatus']['trackNumber'], redisContent['currentStatus']['trackTime'], redisContent['currentStatus']['paused']);
+          }
+        )
+        break;
+      case 'next':
+        playingButton.addEventListener('click',function() {
+            next_prev(+1);
+          }
+        )
+      break;
+      case 'preview':
+        playingButton.addEventListener('click',function() {
+            next_prev(-1);
+          }
+        )
+      break;
+      case 'stop':
+        playingButton.addEventListener('click',function() {
+            redisContent['currentStatus']['paused'] = true;
+            play(redisContent['currentStatus']['trackNumber'], redisContent['currentStatus']['trackTime'], redisContent['currentStatus']['paused']);
+          }
+        )
+      break;
+    }
+  }
+}
 
 function setButton() {
 
@@ -26,10 +59,23 @@ function setButton() {
     button = keysStatus[j];
     state = buttonStatus[button];
     element = document.querySelectorAll("[player-button="+button+"]")[0];
-    console.log(element)
     element.addEventListener("click", function() {
       clickStatus(this)
     });
+  }
+}
+
+function refreshPlaylist() {
+
+  playlistEl = document.getElementById('playlist');
+  playlistAll = redisContent['playlist']
+  playlistLength = playlistAll.length
+  playlistEl.innerHTML = "";
+  for (var p=0; p < playlistLength ; p++)
+  {
+    var liEl = document.createElement("li")
+    liEl.innerHTML = '<i player-button="player-playlist" class="playlist-track fa fa-fw fa-play" data-track="'+playlistAll[p]['track']+'"></i>'+playlistAll[p]['name'];
+    playlistEl.appendChild(liEl)
   }
 }
 
@@ -45,7 +91,7 @@ function clickStatus(element) {
         newState = true;
       }
       redisContent['status'][elAttribute] = newState;
-      setRedis('status', JSON.stringify(redisContent['status']), getRedis)
+      setRedis("", 'status', JSON.stringify(redisContent['status']), getRedis)
     }
   }
   colorizeButton()
@@ -71,4 +117,84 @@ function colorizeButton() {
   }
 }
 
+function addToPlaylist() {
+  elData = this.parentNode.querySelector('.file')
+  elDataPath = elData.getAttribute('data-path')
+  elDataName = elData.getAttribute('data-name')
+  getLength = Object.keys(redisContent['playlist']).length
+  if (getLength == 0) {
+    nextNum = 0
+  }
+  else {
+    nextNum = getLength
+  }
 
+  elAppend = "{\"track\":\""+nextNum+"\", \"name\":\""+elDataName+"\", \"path\":\""+elDataPath+"\"}"
+
+  setRedis('append','playlist', elAppend, getRedis);
+  getRedis(refreshPlaylist);
+}
+
+function play(trackNumber, trackTime, trackStatus) {
+  var audioEl = document.getElementById('player');
+  if (trackNumber == "") {
+    trackNumber = 0;
+  }
+  if (trackTime == "") {
+    trackTime = 0;
+  }
+
+  if (trackStatus === false && audioEl.paused === false) {
+    redisContent['currentStatus']['paused'] = true;
+    redisContent['currentStatus']['trackTime'] = audioEl.currentTime;
+    audioEl.pause()
+  }
+  else if (trackStatus === true) {
+    redisContent['currentStatus']['trackTime'] = 0;
+    audioEl.pause()
+  }
+  else {
+    redisContent['currentStatus']['paused'] = false
+    var trackPath = "/media?track=" + redisContent['playlist'][trackNumber]['path'];
+    audioEl.src = trackPath;
+    audioEl.addEventListener('loadedmetadata', function() {
+      audioEl.currentTime = trackTime;
+    });
+    audioEl.play();
+  }
+
+  setRedis("replace", "currentStatus", JSON.stringify(redisContent['currentStatus']), getRedis);
+
+  audioEl.addEventListener('ended', function() {
+    next_prev(+1)
+  });
+  playpause();
+}
+
+function playpause() {
+  var ppEl = document.querySelector('i[player-button=play]');
+  if (redisContent['currentStatus']['paused'] == true) {
+    ppEl.className = "ba-player playing fa fa-fw fa-play fa-2x";
+  }
+  else {
+    ppEl.className = "ba-player playing fa fa-fw fa-pause fa-2x";
+  }
+}
+
+function next_prev(evSt) {
+
+    numberOfTrack = redisContent['playlist'].length;
+    numberOfTrack = numberOfTrack -1
+    if (numberOfTrack == redisContent['currentStatus']['trackNumber'] && evSt == 1) {
+      redisContent['currentStatus']['trackNumber'] = 0;
+    }
+    else if (redisContent['currentStatus']['trackNumber'] == 0 && evSt == -1) {
+      redisContent['currentStatus']['trackNumber'] = numberOfTrack;
+    }
+    else {
+      redisContent['currentStatus']['trackNumber'] = redisContent['currentStatus']['trackNumber'] + evSt
+    }
+    redisContent['currentStatus']['trackTime'] = 0
+    setRedis("replace", "currentStatus", JSON.stringify(redisContent['currentStatus']), getRedis);
+    play(redisContent['currentStatus']['trackNumber'], redisContent['currentStatus']['trackTime']);
+}

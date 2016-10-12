@@ -37,9 +37,9 @@ class ApiController < ApplicationController
 					elsif File.directory?("#{current_path}/#{entry}")
 					    list_dir[entry] = "#{current_path}/#{entry}"
 					elsif entry.include?(".mp3")
-					    list_files[entry] = "#{current_path}/#{entry}"
+					    list_files[entry] = "#{current_path}/#{entry}".gsub(/#{$mp3BaseDir}/,'')
 					elsif entry.include?(".jpg")
-					   list_pict[entry] = "#{current}/#{entry}"
+					   list_pict[entry] = "#{current}/#{entry}".gsub(/#{$mp3BaseDir}/,'')
 					end
         end
 				content = Hash.new

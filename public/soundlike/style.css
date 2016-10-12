@@ -1,4 +1,4 @@
-n/*html, body, div, span, applet, object, iframe,
+/*html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -8,8 +8,8 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 dd, dl, dt,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -20,7 +20,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -102,7 +102,7 @@ body {
   display:inline-block;
 }
 #mainFrame {
-  width:80%;
+  width:60%;
   margin-left: 10%;
   margin-top: 20px;
   padding: 2%;
@@ -253,7 +253,7 @@ body {
 
 .ba-player {
   border: 2px solid #5896B2;
-  color: #D8D8D8;
+  color: #5896B2;
   cursor: pointer;
   border-radius: 0px 20px 0px 20px;
   display: inline-block;
@@ -278,3 +278,22 @@ body {
 	width: 100%;
 }
 
+#playlistEl {
+	background-color: white;
+	border: 2px solid #5896B2;
+	border-radius: 0px 20px 0px 20px;
+	float: right;
+	font-weight: bold;
+	padding: 40px;
+	margin-right: 10px;
+}
+
+#playlist {
+	list-style: none;
+}
+.playlist-track {
+	border-right: 2px solid black;
+	margin-right: 10px;
+	padding-right: 10px;
+  display: initial;
+}

@@ -85,8 +85,8 @@ button {
   padding: 15px;
   padding-left: 50px;
   width:100%;
-  transition: opacity 1s; 
-  z-index: 22; 
+  transition: opacity 1s;
+  z-index: 22;
 }
 
 #msgErr.fade {
@@ -96,4 +96,3 @@ button {
 #msgContent {
   display: inline-block;
 }
-

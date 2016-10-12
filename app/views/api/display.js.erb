@@ -126,7 +126,7 @@
         dirAllEl[a].addEventListener('click', function(){
           var dir = this.getAttribute('data-name');
           redisContent['path']['current'] = dir
-          setRedis("path", JSON.stringify(redisContent['path']), function(){
+          setRedis("", "path", JSON.stringify(redisContent['path']), function(){
             subMenu("music_directories")
           })
         })
@@ -135,7 +135,11 @@
       }
       getRedis("")
 
+      allElements = document.querySelectorAll('.fa-plus-circle');
+      l = allElements.length
+      for (var k = 0 ; k < l ; k++) {
+        allElements[k].addEventListener('click', addToPlaylist)
+      }
+
   <% end %>
 <% end %>
-
-
