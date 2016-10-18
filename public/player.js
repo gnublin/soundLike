@@ -74,9 +74,20 @@ function refreshPlaylist() {
   for (var p=0; p < playlistLength ; p++)
   {
     var liEl = document.createElement("li")
-    liEl.innerHTML = '<i player-button="player-playlist" class="playlist-track fa fa-fw fa-play" data-track="'+playlistAll[p]['track']+'"></i>'+playlistAll[p]['name'];
-    playlistEl.appendChild(liEl)
+    liEl.innerHTML = '<i player-button="player-delete" class="fa fa-minus-circle fa-play" data-track="'+playlistAll[p]['track']+'" />&nbsp;&nbsp;<i player-button="player-playlist" class="playlist-track fa fa-fw fa-play" data-track="'+playlistAll[p]['track']+'"></i>'+playlistAll[p]['name'];
+    liEl.querySelector('i[player-button="player-delete"]').addEventListener('click', function() {
+      trackNumber=this.getAttribute('data-track')
+      delFromPlaylist(trackNumber)
+    });
+    playlistEl.appendChild(liEl);
   }
+  getRedis(refreshTrackPlay);
+}
+
+function delFromPlaylist(trackNumber) {
+  console.log(redisContent['playlist']);
+  delete redisContent['playlist'][trackNumber]
+  console.log(redisContent['playlist']);
 }
 
 function clickStatus(element) {
@@ -163,12 +174,14 @@ function play(trackNumber, trackTime, trackStatus) {
     audioEl.play();
   }
 
+  audioEl.setAttribute('track-num',trackNumber)
   setRedis("replace", "currentStatus", JSON.stringify(redisContent['currentStatus']), getRedis);
 
   audioEl.addEventListener('ended', function() {
     next_prev(+1)
   });
   playpause();
+  getRedis(refreshTrackPlay)
 }
 
 function playpause() {
@@ -182,19 +195,46 @@ function playpause() {
 }
 
 function next_prev(evSt) {
+    var audioEl = document.getElementById('player');
 
     numberOfTrack = redisContent['playlist'].length;
-    numberOfTrack = numberOfTrack -1
-    if (numberOfTrack == redisContent['currentStatus']['trackNumber'] && evSt == 1) {
-      redisContent['currentStatus']['trackNumber'] = 0;
-    }
-    else if (redisContent['currentStatus']['trackNumber'] == 0 && evSt == -1) {
-      redisContent['currentStatus']['trackNumber'] = numberOfTrack;
-    }
-    else {
-      redisContent['currentStatus']['trackNumber'] = redisContent['currentStatus']['trackNumber'] + evSt
+    numberOfTrack = numberOfTrack - 1
+
+    if (evSt == -1 && audioEl.currentTime < 5 || evSt == 1) {
+      if (numberOfTrack == redisContent['currentStatus']['trackNumber'] && evSt == 1) {
+        redisContent['currentStatus']['trackNumber'] = 0;
+      }
+      else if (redisContent['currentStatus']['trackNumber'] == 0 && evSt == -1) {
+        redisContent['currentStatus']['trackNumber'] = numberOfTrack;
+      }
+      else {
+        redisContent['currentStatus']['trackNumber'] = redisContent['currentStatus']['trackNumber'] + evSt
+      }
     }
     redisContent['currentStatus']['trackTime'] = 0
     setRedis("replace", "currentStatus", JSON.stringify(redisContent['currentStatus']), getRedis);
     play(redisContent['currentStatus']['trackNumber'], redisContent['currentStatus']['trackTime']);
+}
+
+function refreshTrackPlay() {
+  var audioEl = document.getElementById('player')
+  var tpEl = document.querySelectorAll('.playlist-track');
+  var tpElLen = tpEl.length;
+  for (var j=0 ; j < tpElLen ; j++) {
+    if (tpEl[j].getAttribute('data-track') == audioEl.getAttribute('track-num')) {
+      color = "#5896B2";
+      weight = "bold";
+      padding = "0px";
+    }
+    else {
+      color = "black";
+      weight = "normal";
+      padding = "5px"
+    }
+
+    tpEl[j].parentNode.style.color = color;
+    tpEl[j].parentNode.style["padding-left"] = padding;
+    tpEl[j].parentNode.style["font-weight"] = weight;
+  }
+
 }

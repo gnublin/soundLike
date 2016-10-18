@@ -283,7 +283,7 @@ body {
 	border: 2px solid #5896B2;
 	border-radius: 0px 20px 0px 20px;
 	float: right;
-	font-weight: bold;
+	/*font-weight: bold;*/
 	padding: 40px;
 	margin-right: 10px;
 }
@@ -292,7 +292,7 @@ body {
 	list-style: none;
 }
 .playlist-track {
-	border-right: 2px solid black;
+	/*border-right: 2px solid black;*/
 	margin-right: 10px;
 	padding-right: 10px;
   display: initial;
