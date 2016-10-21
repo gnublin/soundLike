@@ -297,3 +297,7 @@ body {
 	padding-right: 10px;
   display: initial;
 }
+
+.player-delete {
+	cursor: pointer;
+}

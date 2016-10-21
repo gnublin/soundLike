@@ -74,8 +74,8 @@ function refreshPlaylist() {
   for (var p=0; p < playlistLength ; p++)
   {
     var liEl = document.createElement("li")
-    liEl.innerHTML = '<i player-button="player-delete" class="fa fa-minus-circle fa-play" data-track="'+playlistAll[p]['track']+'" />&nbsp;&nbsp;<i player-button="player-playlist" class="playlist-track fa fa-fw fa-play" data-track="'+playlistAll[p]['track']+'"></i>'+playlistAll[p]['name'];
-    liEl.querySelector('i[player-button="player-delete"]').addEventListener('click', function() {
+    liEl.innerHTML = '<i class="fa fa-minus-circle fa-play player-delete" data-track="'+p+'" />&nbsp;&nbsp;<i player-button="player-playlist" class="playlist-track fa fa-fw fa-play" data-track="'+p+'"></i>'+playlistAll[p]['name'];
+    liEl.querySelector('.player-delete').addEventListener('click', function() {
       trackNumber=this.getAttribute('data-track')
       delFromPlaylist(trackNumber)
     });
@@ -85,9 +85,10 @@ function refreshPlaylist() {
 }
 
 function delFromPlaylist(trackNumber) {
-  console.log(redisContent['playlist']);
-  delete redisContent['playlist'][trackNumber]
-  console.log(redisContent['playlist']);
+//  index = redisContent['playlist'].indexOf(redisContent['playlist'][trackNumber])
+  console.log(trackNumber)
+  setRedis('del','playlist', trackNumber, refreshTrackPlay);
+  getRedis(refreshPlaylist);
 }
 
 function clickStatus(element) {

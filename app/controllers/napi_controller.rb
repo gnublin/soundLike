@@ -39,13 +39,17 @@ class NapiController < ApplicationController
         else
           r_key = "#{session['user_id']}-info"
           getInfo = $redis.get(r_key)
-          r_val = JSON.parse(params['value'])
+          r_val = params['value']
           getInfo = JSON.parse(getInfo)
           case params['method']
           when 'replace'
+            r_val = JSON.parse(r_val)
             getInfo[params['key']] = r_val
           when 'append'
+            r_val = JSON.parse(r_val)
             getInfo[params['key']] << r_val
+          when 'del'
+            getInfo[params['key']].delete_at(r_val.to_i)
           end
           info = $redis.set(r_key, getInfo.to_json)
         end
