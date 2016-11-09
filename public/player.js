@@ -86,9 +86,14 @@ function refreshPlaylist() {
 
 function delFromPlaylist(trackNumber) {
 //  index = redisContent['playlist'].indexOf(redisContent['playlist'][trackNumber])
-  console.log(trackNumber)
-  setRedis('del','playlist', trackNumber, refreshTrackPlay);
-  getRedis(refreshPlaylist);
+  var currentTrackNumber = redisContent['currentStatus']['trackNumber'];
+  if (trackNumber < currentTrackNumber) {
+    redisContent['currentStatus']['trackNumber'] = redisContent['currentStatus']['trackNumber'] - 1
+  }
+
+  setRedis('replace','currentStatus', JSON.stringify(redisContent['currentStatus']), '');
+  setRedis('del','playlist', trackNumber, refreshPlaylist);
+  // getRedis(refreshPlaylist);
 }
 
 function clickStatus(element) {
@@ -179,7 +184,11 @@ function play(trackNumber, trackTime, trackStatus) {
   setRedis("replace", "currentStatus", JSON.stringify(redisContent['currentStatus']), getRedis);
 
   audioEl.addEventListener('ended', function() {
-    next_prev(+1)
+    var next_val = +1;
+    if ( redisContent['status']['repeated'] == true ) {
+      next_val = 0;
+    }
+      next_prev(next_val)
   });
   playpause();
   getRedis(refreshTrackPlay)
@@ -200,18 +209,23 @@ function next_prev(evSt) {
 
     numberOfTrack = redisContent['playlist'].length;
     numberOfTrack = numberOfTrack - 1
-
-    if (evSt == -1 && audioEl.currentTime < 5 || evSt == 1) {
-      if (numberOfTrack == redisContent['currentStatus']['trackNumber'] && evSt == 1) {
-        redisContent['currentStatus']['trackNumber'] = 0;
-      }
-      else if (redisContent['currentStatus']['trackNumber'] == 0 && evSt == -1) {
-        redisContent['currentStatus']['trackNumber'] = numberOfTrack;
-      }
-      else {
-        redisContent['currentStatus']['trackNumber'] = redisContent['currentStatus']['trackNumber'] + evSt
+    if ( redisContent['status']['shuffled'] == true ) {
+      redisContent['currentStatus']['trackNumber'] = Math.floor((Math.random() * redisContent['playlist'].length));
+    }
+    else {
+      if (evSt == -1 && audioEl.currentTime < 5 || evSt == 1) {
+        if (numberOfTrack == redisContent['currentStatus']['trackNumber'] && evSt == 1) {
+          redisContent['currentStatus']['trackNumber'] = 0;
+        }
+        else if (redisContent['currentStatus']['trackNumber'] == 0 && evSt == -1) {
+          redisContent['currentStatus']['trackNumber'] = numberOfTrack;
+        }
+        else {
+          redisContent['currentStatus']['trackNumber'] = redisContent['currentStatus']['trackNumber'] + evSt
+        }
       }
     }
+
     redisContent['currentStatus']['trackTime'] = 0
     setRedis("replace", "currentStatus", JSON.stringify(redisContent['currentStatus']), getRedis);
     play(redisContent['currentStatus']['trackNumber'], redisContent['currentStatus']['trackTime']);
@@ -222,7 +236,8 @@ function refreshTrackPlay() {
   var tpEl = document.querySelectorAll('.playlist-track');
   var tpElLen = tpEl.length;
   for (var j=0 ; j < tpElLen ; j++) {
-    if (tpEl[j].getAttribute('data-track') == audioEl.getAttribute('track-num')) {
+    // if (tpEl[j].getAttribute('data-track') == audioEl.getAttribute('track-num')) {
+    if (tpEl[j].getAttribute('data-track') == redisContent['currentStatus']['trackNumber']) {
       color = "#5896B2";
       weight = "bold";
       padding = "0px";

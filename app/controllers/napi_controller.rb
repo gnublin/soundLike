@@ -53,7 +53,8 @@ class NapiController < ApplicationController
           end
           info = $redis.set(r_key, getInfo.to_json)
         end
-        @dd = "var redisContent = '#{info}';"
+        @dd = "var redisContent = #{$redis.get(r_key)};"
+        p @dd
       end
 
     unless err
