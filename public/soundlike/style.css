@@ -94,20 +94,21 @@ body {
 }
 
 #menuLeft{
-  padding:10px;
+	display:inline-block;
+	height: 90%;
   margin-top:20px;
-  position: fixed;
-  height: 90%;
-  z-index: 9;
-  display:inline-block;
+	/*padding:10px;*/
+	position: fixed;
+	width: 10%;
+	z-index: 9;
 }
 #mainFrame {
-  width:60%;
+	display:inline-block;
   margin-left: 10%;
   margin-top: 20px;
-  padding: 2%;
+  /*padding: 2%;*/
   position: relative;
-  display:inline-block;
+	width:55%;
 }
 
 #content {
@@ -279,13 +280,15 @@ body {
 }
 
 #playlistEl {
-	background-color: white;
+	background-coalor: white;
 	border: 2px solid #5896B2;
 	border-radius: 0px 20px 0px 20px;
 	float: right;
+	height: 100%;
 	/*font-weight: bold;*/
-	padding: 40px;
 	margin-right: 10px;
+	padding: 40px;
+	width: 30%;
 }
 
 #playlist {

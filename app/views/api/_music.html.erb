@@ -4,7 +4,7 @@
 Current path <%= @apiContent['data']['current'] %>
 </div>
 <br>
-<div class="music-action"><p class="m-a del-playlist">Remove all element from playlist</p><p class="m-a app-all">Append all current element in playlist</p></div>
+<div class="music-action"><p id="del-all" class="m-a" onclick="modifAll('delete');">Remove all element from playlist</p><p id="app-all" class="m-a" onclick="modifAll('append');">Append all current element in playlist</p></div>
 <div id="list_el">
 <% @apiContent['data']['dir'].each do |element, name| %>
   <div class="dir_el">
@@ -24,5 +24,3 @@ Current path <%= @apiContent['data']['current'] %>
   </div>
 <% end %>
 </div>
-
-

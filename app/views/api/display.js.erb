@@ -138,7 +138,9 @@
       allElements = document.querySelectorAll('.fa-plus-circle');
       l = allElements.length
       for (var k = 0 ; k < l ; k++) {
-        allElements[k].addEventListener('click', addToPlaylist)
+        allElements[k].addEventListener('click', function() {
+          addToPlaylist(this)
+        })
       }
 
   <% end %>

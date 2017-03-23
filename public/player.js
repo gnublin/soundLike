@@ -134,8 +134,8 @@ function colorizeButton() {
   }
 }
 
-function addToPlaylist() {
-  elData = this.parentNode.querySelector('.file')
+function addToPlaylist(elData) {
+  elData = elData.parentNode.querySelector('.file')
   elDataPath = elData.getAttribute('data-path')
   elDataName = elData.getAttribute('data-name')
   getLength = Object.keys(redisContent['playlist']).length
@@ -251,6 +251,30 @@ function refreshTrackPlay() {
     tpEl[j].parentNode.style.color = color;
     tpEl[j].parentNode.style["padding-left"] = padding;
     tpEl[j].parentNode.style["font-weight"] = weight;
+  }
+
+}
+
+function modifAll(modifType) {
+
+  switch (modifType) {
+    case 'append':
+      var allElApp = document.querySelectorAll('.fa-plus-circle');
+      var allElAppLen = allElApp.length
+      for (var o=0 ; o< allElAppLen; o++) {
+        console.log("add" + allElApp[o])
+        addToPlaylist(allElApp[o]);
+      }
+      break;
+    case 'delete':
+      var allElDel = document.querySelectorAll('.fa-minus-circle');
+      var allElDelLen = allElDel.length
+      for (var p=0 ; p < allElDelLen ; p++) {
+        trackNumber=allElDel[p].getAttribute('data-track')
+        delFromPlaylist(trackNumber)
+      }
+    default:
+
   }
 
 }
